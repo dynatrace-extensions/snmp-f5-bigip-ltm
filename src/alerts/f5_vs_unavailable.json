@@ -1,0 +1,28 @@
+{
+    "id": "F50a1e47-0001-0001-0005-aaaaaaaaaaaa",
+    "metricSelector": "com.dynatrace.extension.f5.bigip.virtualserver.state:min:filter(or(eq(\"virtualserver.availstate\",\"red(3)\"),eq(\"virtualserver.availstate\",\"yellow(2)\")))",
+    "name": "F5 LTM - Virtual Server is unavailable",
+    "description": "The F5 Virtual Server {dims:virtualserver.name} is unavailable. It was found in sate {dims:virtualserver.availstate}.\nThis Virtual Server points to Pool {dims:pool.name} and runs on BIG-IP device {dims:instance.name}.",
+    "severity": "AVAILABILITY",
+    "enabled": true,
+    "disabledReason": "NONE",
+    "warningReason": "NONE",
+    "monitoringStrategy": {
+        "type": "STATIC_THRESHOLD",
+        "samples": 5,
+        "violatingSamples": 3,
+        "dealertingSamples": 5,
+        "alertCondition": "ABOVE",
+        "alertingOnMissingData": false,
+        "threshold": 0.0,
+        "unit": "UNSPECIFIED"
+    },
+    "primaryDimensionKey": "dt.entity.f5:virtualserver",
+    "alertCondition": "ABOVE",
+    "samples": 5,
+    "violatingSamples": 3,
+    "dealertingSamples": 5,
+    "threshold": 0.0,
+    "unit": "UNSPECIFIED",
+    "eventType": "AVAILABILITY"
+}

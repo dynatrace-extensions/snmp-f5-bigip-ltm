@@ -1,0 +1,28 @@
+{
+    "id": "F50a1e47-0001-0001-0001-aaaaaaaaaaaa",
+    "metricSelector": "100-(com.dynatrace.extension.f5.bigip.sys.global.host.cpu.idle1m)",
+    "name": "F5 LTM - Instance High CPU",
+    "description": "F5 Instance {dims:instance.name} registered high CPU usage.\n\nThe total CPU utilization value of {severity} was {alert_condition} your custom threshold of {threshold}.",
+    "severity": "RESOURCE_CONTENTION",
+    "enabled": true,
+    "disabledReason": "NONE",
+    "warningReason": "NONE",
+    "monitoringStrategy": {
+        "type": "STATIC_THRESHOLD",
+        "samples": 5,
+        "violatingSamples": 3,
+        "dealertingSamples": 5,
+        "alertCondition": "ABOVE",
+        "alertingOnMissingData": false,
+        "threshold": 80.0,
+        "unit": "PERCENT"
+    },
+    "primaryDimensionKey": "dt.entity.f5:instance",
+    "alertCondition": "ABOVE",
+    "samples": 5,
+    "violatingSamples": 3,
+    "dealertingSamples": 5,
+    "threshold": 80.0,
+    "unit": "PERCENT",
+    "eventType": "RESOURCE_CONTENTION"
+}

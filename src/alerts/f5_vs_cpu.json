@@ -1,0 +1,29 @@
+{
+    "id": "F50a1e47-0001-0001-0004-aaaaaaaaaaaa",
+    "metricId": "com.dynatrace.extension.f5.bigip.virtualserver.stat.vs.usage.ratio1m",
+    "name": "F5 LTM - Virtual Server High CPU",
+    "description": "Virtual Server {dims:virtualserver.name} on F5 Instace {dims:instance.name} registered high CPU.\n\nThe {metricname} value of {severity} was {alert_condition} your custom threshold of {threshold}.",
+    "aggregationType": "AVG",
+    "severity": "RESOURCE_CONTENTION",
+    "enabled": true,
+    "disabledReason": "NONE",
+    "warningReason": "NONE",
+    "monitoringStrategy": {
+        "type": "STATIC_THRESHOLD",
+        "samples": 5,
+        "violatingSamples": 3,
+        "dealertingSamples": 5,
+        "alertCondition": "ABOVE",
+        "alertingOnMissingData": false,
+        "threshold": 80.0,
+        "unit": "PERCENT"
+    },
+    "primaryDimensionKey": "dt.entity.f5:virtualserver",
+    "alertCondition": "ABOVE",
+    "samples": 5,
+    "violatingSamples": 3,
+    "dealertingSamples": 5,
+    "threshold": 80.0,
+    "unit": "PERCENT",
+    "eventType": "RESOURCE_CONTENTION"
+}

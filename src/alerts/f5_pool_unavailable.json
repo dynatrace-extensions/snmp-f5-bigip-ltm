@@ -1,0 +1,28 @@
+{
+    "id": "F50a1e47-0001-0001-0003-aaaaaaaaaaaa",
+    "metricSelector": "com.dynatrace.extension.f5.bigip.pool.state:min:filter(or(eq(\"pool.availstate\", \"red(3)\"),eq(\"pool.availstate\", \"yellow(2)\")))",
+    "name": "F5 LTM - Pool is unavailable",
+    "description": "The F5 Pool {dims:pool.name} is unavailable. It was found in sate {dims:pool.availstate}.\nThis pool runs on F5 BIG-IP device {dims:instance.name}.",
+    "severity": "AVAILABILITY",
+    "enabled": true,
+    "disabledReason": "NONE",
+    "warningReason": "NONE",
+    "monitoringStrategy": {
+        "type": "STATIC_THRESHOLD",
+        "samples": 5,
+        "violatingSamples": 3,
+        "dealertingSamples": 5,
+        "alertCondition": "ABOVE",
+        "alertingOnMissingData": false,
+        "threshold": 0.0,
+        "unit": "UNSPECIFIED"
+    },
+    "primaryDimensionKey": "dt.entity.f5:pool",
+    "alertCondition": "ABOVE",
+    "samples": 5,
+    "violatingSamples": 3,
+    "dealertingSamples": 5,
+    "threshold": 0.0,
+    "unit": "UNSPECIFIED",
+    "eventType": "AVAILABILITY"
+}
