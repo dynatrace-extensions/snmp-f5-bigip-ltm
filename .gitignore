@@ -1,2 +1,5 @@
 # internal tooling hooks
 dynatrace-internal
+.envrc
+
+.secrets
