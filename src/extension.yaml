@@ -1,5 +1,5 @@
 name: com.dynatrace.extension.f5.bigip
-version: <%=version%>
+version: 2.2.0
 minDynatraceVersion: "1.241"
 author:
   name: Dynatrace
