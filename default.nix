@@ -6,12 +6,17 @@ let
     # obtain via `git ls-remote https://github.com/nixos/nixpkgs nixos-unstable`
   };
   pkgs = import nixpkgs { config = {}; };
+  pythonPkgs = python-packages: with python-packages; [
+      ptpython # used for dev
+      pyyaml
+      jsonschema
+    ];
   dtcli = with pkgs; stdenv.mkDerivation rec {
-    version = "1.6.3";
+    version = "1.6.10";
     name = "dtcli-${version}";
     src = fetchurl {
       url = "https://github.com/dynatrace-oss/dt-cli/releases/download/v${version}/dt";
-      sha256 = "sha256-z2Apkj+ScOfbxmsAp6lTc53y9W1ZBuVKdD4gJfY+naU=";
+      sha256 = "1adcvhb464z9hfhygfrzrkb4qsa8vfx7lhsvj615ni7md1g1nx71";
     };
 
     unpackPhase = ''
@@ -27,7 +32,7 @@ let
     };
   };
   commonMake = with pkgs; stdenv.mkDerivation rec {
-    version = "1feba9658f778c4e9901dc8635a6c10d1bd7ab75";
+    version = "1a61b557d4d7064180d407e1da16e20bd98f02b1";
     name = "commonMake-${version}";
     src = builtins.fetchGit {
       url = "https://github.com/dynatrace-extensions/toolz.git";
@@ -44,16 +49,11 @@ let
       platforms = platforms.linux;
     };
   };
-  pythonPkgs = python-packages: with python-packages; [
-      ptpython # used for dev
-      pyyaml
-      jsonschema
-    ] ++ internalPkgs.pythonPkgs;
   dtClusterSchema = with pkgs; stdenv.mkDerivation rec {
-    version = "1-245";
+    version = "1-230";
     name = "dynatrace-cluster-schemas-${version}";
     src = fetchzip {
-      url = "https://github.com/dynatrace-extensions/toolz/releases/download/schema-1245/dt-schemas-1-230.tar";
+      url = "https://github.com/dynatrace-extensions/toolz/releases/download/schema-1230/dt-schemas-1-230.tar";
       sha256 = "sha256-9jc8HIZiTG9Qk/TULWNx9PAfi8M6Kq9k+7EWoJKgcHE=";
       stripRoot = false;
     };
@@ -66,12 +66,6 @@ let
       install -m755 -D ble $out/bin/__dt_cluster_schema
     '';
   };
-  internalPkgs = if builtins.pathExists ./dynatrace-internal/root.nix
-    then import ./dynatrace-internal/root.nix { parentPkgs = pkgs; }
-    else {
-      pkgs = [];
-      pythonPkgs = [];
-    };
   pythonCore = pkgs.python39;
   myPython = pythonCore.withPackages pythonPkgs;
   env = pkgs.buildEnv {
@@ -82,42 +76,30 @@ let
       git
       gnugrep
       gnumake
-      myPython
-      
-      # TODO: is this needed anymore?
       yq
       curl
       jq
+      myPython
+      entr
+      commonMake
+
+      bzip2
+      openssl
+      zip
 
       dtcli
-      commonMake
       dtClusterSchema
+
+      # datasources
+      # temporary disabled, until we figure out how to share it properly
+      #snmpDatasource
 
       # extension-specific
       net-snmp
-    ] ++ internalPkgs.pkgs;
+    ];
   };
 in
 {
-  docker = { image = pkgs.dockerTools.buildImage {
-    name = "extension-env"; 
-    tag = "builded"; 
-
-    created = "now";
-
-    contents = [ env ]; 
-
-    runAsRoot = ''
-      #!${pkgs.runtimeShell}
-      mkdir -p /workdir
-      ln -s ${pkgs.runtimeShell} /bin/sh
-    '';
-
-    config = { 
-      Cmd = [ "${pkgs.runtimeShell}" ];
-      WorkingDir = "/workdir";
-    };
-  };};
   shell = pkgs.mkShell {
     buildInputs = [ env ];
   };
