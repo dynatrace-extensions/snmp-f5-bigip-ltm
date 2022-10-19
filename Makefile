@@ -1,5 +1,3 @@
-.DEFAULT_GOAL := init
-
 SOURCES_DIR := src
 ENTRYPOINT := extension.yaml
 TOKEN_LOCATION := ./secrets/token
@@ -28,8 +26,6 @@ test: ## run all tests
 # ###############
 .PHONY: init clean really_clean 
 init: ## one time setup
-	@# this is used to squash the "direnv is blocked" prompt which misguides the first time users, it's silenced to not show the error message if the clobber fails
-	@-mv --no-clobber _.envrc .envrc 2>/dev/null
 	direnv allow .
 
 # Utility hooks
