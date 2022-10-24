@@ -1,0 +1,18 @@
+name: on-push
+on: [push]
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    container:
+      image: nixos/nix:2.8.1
+    steps:
+      # for reasons(tm) only v1 works with nix container out of the box
+      - name: checkout
+        uses: actions/checkout@v1
+
+#      - name: lint
+#        run: nix-shell --command "make lint"
+
+      - name: lint
+        run: nix-shell --command "make build"
